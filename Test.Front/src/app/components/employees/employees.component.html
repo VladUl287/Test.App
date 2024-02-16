@@ -2,22 +2,67 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Отдел</th>
-                <th scope="col">ФИО</th>
-                <th scope="col">Дата рождения</th>
-                <th scope="col">Дата устройства на работу</th>
-                <th scope="col">Заработная плата</th>
-                <th scope="col">#</th>
-                <th scope="col">#</th>
+                <th class="align-middle sortable" scope="col" (click)="sortBy('department\.name')">Отдел</th>
+                <th class="align-middle sortable" scope="col" (click)="sortBy('fullName')">ФИО</th>
+                <th class="align-middle sortable" scope="col" (click)="sortBy('dateBirth')">Дата рождения</th>
+                <th class="align-middle sortable" scope="col" (click)="sortBy('dateEmployment')">Дата приёма на работу</th>
+                <th class="align-middle sortable" scope="col" (click)="sortBy('salary')">Заработная плата</th>
+                <th class="align-middle" scope="col">#</th>
+                <th class="align-middle" scope="col">
+                    <button (click)="createEmployee()" type="button"
+                        class="btn btn-outline-success btn-sm">Создать</button>
+                </th>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td class="align-middle">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" [value]="filters.department"
+                            (input)="inputChange('department', $event)">
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" [value]="filters.fullName"
+                            (input)="inputChange('fullName', $event)">
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <div class="input-group input-group-sm">
+                        <input type="date" class="form-control" [value]="filters.dateBirth"
+                            (input)="inputChange('dateBirth', $event)" />
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <div class="input-group input-group-sm">
+                        <input type="date" class="form-control" [value]="filters.dateEmployment"
+                            (input)="inputChange('dateEmployment', $event)" />
+                    </div>
+                </td>
+                <td class="align-middle">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" [value]="filters.salary"
+                            (input)="inputChange('salary', $event)">
+                    </div>
+                </td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
             <tr *ngFor="let employee of employees">
-                <th scope="row">{{ employee.department.name }}</th>
-                <td>{{ employee.fullName }}</td>
-                <td>{{ employee.dateBirth }}</td>
-                <td>{{ employee.dateEmployment }}</td>
-                <td>{{ employee.salary }}</td>
+                <th class="align-middle" scope="row">{{ employee.department.name }}</th>
+                <td class="align-middle">{{ employee.fullName }}</td>
+                <td class="align-middle">{{ employee.dateBirth }}</td>
+                <td class="align-middle">{{ employee.dateEmployment }}</td>
+                <td class="align-middle">{{ employee.salary }}</td>
+                <td class="align-middle">
+                    <button (click)="updateEmployee(employee)" type="button"
+                        class="btn btn-outline-primary btn-sm">Обновить</button>
+                </td>
+                <td class="align-middle">
+                    <button (click)="removeEmployee(employee.id)" type="button"
+                        class="btn btn-outline-danger btn-sm">Удалить</button>
+                </td>
             </tr>
         </tbody>
     </table>

@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ action }} пользователя</h4>
+    <button type="button" class="btn btn-light" (click)="activeModal.dismiss()">
+        &times;
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="d-none">
+            <input type="text" formControlName="id" hidden>
+        </div>
+        <div class="mb-3">
+            <label for="departmentId" class="form-label">Отдел</label>
+            <select class="form-select" id="departmentId" formControlName="departmentId">
+                <option *ngFor="let department of departaments" [value]="department.id">{{ department.name }}</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="fullName" class="form-label">ФИО</label>
+            <input type="text" class="form-control" id="fullName" formControlName="fullName">
+        </div>
+        <div class="mb-3">
+            <label for="dateBirth" class="form-label">Дата рождения</label>
+            <input type="date" class="form-control" id="dateBirth" formControlName="dateBirth">
+        </div>
+        <div class="mb-3">
+            <label for="dateEmployment" class="form-label">Дата приёма на работу</label>
+            <input type="date" class="form-control" id="dateEmployment" formControlName="dateEmployment">
+        </div>
+        <div class="mb-3">
+            <label for="salary" class="form-label">Заработная плата</label>
+            <input type="text" class="form-control" id="salary" formControlName="salary">
+        </div>
+        <button type="button" class="btn btn-dark d-block ms-auto" type="submit">
+            {{ action }}
+        </button>
+    </form>
+</div>

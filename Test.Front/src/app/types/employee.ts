@@ -3,8 +3,8 @@ import { Department } from "./department"
 export type Employee = {
     id: string,
     fullName: string,
-    dateBirth: Date,
-    dateEmployment: Date,
+    dateBirth: string,
+    dateEmployment: string,
     salary: string,
     department: Department
 }

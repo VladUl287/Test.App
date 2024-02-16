@@ -5,4 +5,5 @@ import { EmployeesComponent } from './components/employees/employees.component'
 export const routes: Routes = [
     { path: 'company', component: CompanyComponent },
     { path: 'employees', component: EmployeesComponent },
+    { path: '**', redirectTo: '/company' }
 ]
