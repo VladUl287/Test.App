@@ -1,0 +1,24 @@
+<div class="m-1">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Отдел</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Дата рождения</th>
+                <th scope="col">Дата устройства на работу</th>
+                <th scope="col">Заработная плата</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <th scope="row">{{ employee.department.name }}</th>
+                <td>{{ employee.fullName }}</td>
+                <td>{{ employee.dateBirth }}</td>
+                <td>{{ employee.dateEmployment }}</td>
+                <td>{{ employee.salary }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
