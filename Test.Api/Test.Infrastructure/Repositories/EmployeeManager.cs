@@ -20,11 +20,11 @@ public sealed class EmployeeManager : IEmployeeManager
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task Delete(Guid id)
+    public Task Delete(Guid id)
     {
-        var employee = await dbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
-        dbContext.Employees.Remove(employee);
-        await dbContext.SaveChangesAsync();
+        return dbContext.Employees
+            .Where(x => x.Id == id)
+            .ExecuteDeleteAsync();
     }
 
     public async Task Update(Employee employee)
