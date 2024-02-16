@@ -22,9 +22,9 @@ public sealed class EmployeeManager : IEmployeeManager
 
     public async Task Delete(Guid id)
     {
-        await dbContext.Employees
-             .Where(e => e.Id == id)
-             .ExecuteDeleteAsync();
+        var employee = await dbContext.Employees.FirstOrDefaultAsync(x => x.Id == id);
+        dbContext.Employees.Remove(employee);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task Update(Employee employee)

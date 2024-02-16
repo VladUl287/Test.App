@@ -15,13 +15,13 @@ public static class ServicesExtensions
         services.AddDbContext<TContext>(
             options =>
             {
-                options.UseInMemoryDatabase("db");
-                //options.UseSqlServer(
-                //    configuration.GetConnectionString("DefaultConnection"),
-                //    options =>
-                //    {
-                //        options.MigrationsAssembly(typeof(TAssemblyMarker).Assembly.FullName);
-                //    });
+                //options.UseInMemoryDatabase("db");
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    options =>
+                    {
+                        options.MigrationsAssembly(typeof(TAssemblyMarker).Assembly.FullName);
+                    });
                 options.LogTo(Console.WriteLine);
                 options.EnableSensitiveDataLogging();
             },

@@ -10,5 +10,5 @@ public sealed class EmployeeFilters
 
     public DateTime? DateEmployment { get; init; }
 
-    public long? DepartmentId { get; init; }
+    public string? Department { get; init; } = string.Empty;
 }

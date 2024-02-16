@@ -7,9 +7,7 @@ namespace Test.Infrastructure.Database;
 public sealed class DatabaseContext : DbContext
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-    {
-        Database.EnsureCreated();
-    }
+    {}
 
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<Department> Departments => Set<Department>();

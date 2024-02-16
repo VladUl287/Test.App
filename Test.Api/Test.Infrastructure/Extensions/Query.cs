@@ -13,17 +13,18 @@ internal static class Query
             return query;
         }
 
-        var parameter = Expression.Parameter(typeof(Employee));
-        var expression = parameter
+        var employee = Expression.Parameter(typeof(Employee));
+        var department = Expression.Property(employee, nameof(Employee.Department));
+        var expression = employee
             .StartsWith(filters.FullName, nameof(Employee.FullName))
-            .AndEqual(parameter, filters.Salary, nameof(Employee.Salary))
-            .AndEqual(parameter, filters.DateBirth, nameof(Employee.DateBirth))
-            .AndEqual(parameter, filters.DepartmentId, nameof(Employee.DepartmentId))
-            .AndEqual(parameter, filters.DateEmployment, nameof(Employee.DateEmployment));
+            .AndStartsWith(department, filters.Department, nameof(Employee.Department.Name))
+            .AndEqual(employee, filters.Salary, nameof(Employee.Salary))
+            .AndEqual(employee, filters.DateBirth, nameof(Employee.DateBirth))
+            .AndEqual(employee, filters.DateEmployment, nameof(Employee.DateEmployment));
 
         if (expression is not null)
         {
-            var lambda = Expression.Lambda<Func<Employee, bool>>(expression, parameter);
+            var lambda = Expression.Lambda<Func<Employee, bool>>(expression, employee);
             return query.Where(lambda);
         }
 
