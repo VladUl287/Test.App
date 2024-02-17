@@ -13,7 +13,9 @@
         <div class="mb-3">
             <label for="departmentId" class="form-label">Отдел</label>
             <select class="form-select" id="departmentId" formControlName="departmentId">
-                <option *ngFor="let department of departaments" [value]="department.id">{{ department.name }}</option>
+                <option *ngFor="let department of departaments | async" [value]="department.id">
+                    {{ department.name }}
+                </option>
             </select>
         </div>
         <div class="mb-3">

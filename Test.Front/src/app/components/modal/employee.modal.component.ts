@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs';
 import { DepartmentService } from './../../services/departament.service';
 import { CommonModule } from "@angular/common";
-import { Component, OnInit } from "@angular/core"
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core"
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap"
 import { Department as Departament } from '../../types/department';
@@ -13,20 +14,18 @@ import { Department as Departament } from '../../types/department';
         ReactiveFormsModule
     ],
     templateUrl: './employee.modal.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalComponent implements OnInit {
     action: 'Создать' | 'Обновить' = 'Создать'
-    departaments: Array<Departament> = []
+    departaments: Observable<Array<Departament>> | undefined
 
     constructor(
         public readonly activeModal: NgbActiveModal,
         private readonly departamentService: DepartmentService) { }
 
     ngOnInit() {
-        this.departamentService.getDepartaments()
-            .subscribe(result => {
-                this.departaments = result
-            })
+        this.departaments = this.departamentService.getDepartaments()
     }
 
     employeeForm = new FormGroup({
