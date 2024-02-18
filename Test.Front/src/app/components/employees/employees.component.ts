@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core"
+import { BehaviorSubject, Observable, map } from "rxjs"
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core"
 import { Employee } from "../../types/employee"
 import { EmployeeService } from "../../services/employee.service"
 import { CommonModule } from "@angular/common"
@@ -15,10 +16,12 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
     ],
     templateUrl: './employees.component.html',
     styleUrl: './employees.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EmployeesComponent implements OnInit {
-    employees: Array<Employee> = []
-    filters: EmployeeFilter = {
+    private readonly employeesSubject = new BehaviorSubject<Array<Employee>>([])
+    public employees: Observable<Array<Employee>> = this.employeesSubject.asObservable()
+    public filters: EmployeeFilter = {
         salary: '',
         fullName: '',
         department: ''
@@ -34,16 +37,12 @@ export class EmployeesComponent implements OnInit {
 
     getEmployees(): void {
         this.employeeService.getEmployees(this.filters)
-            .subscribe(result => {
-                this.employees = result
-            })
+            .subscribe(employees => this.employeesSubject.next(employees))
     }
 
     removeEmployee(id: string): void {
         this.employeeService.removeEmployee(id)
-            .subscribe(() => {
-                this.getEmployees()
-            })
+            .subscribe(() => this.getEmployees())
     }
 
     updateEmployee(employee: Employee): void {
@@ -81,11 +80,12 @@ export class EmployeesComponent implements OnInit {
     }
 
     sortBy(path: string): void {
-        this.employees = this.employees.sort((a, b) => {
-            if (this.getValue(a, path) > this.getValue(b, path)) return 1
-            else if (this.getValue(a, path) < this.getValue(b, path)) return -1
-            return 0
-        })
+        this.employees = this.employees?.pipe(map(
+            (result) => result.sort((a, b) => {
+                if (this.getValue(a, path) > this.getValue(b, path)) return 1
+                else if (this.getValue(a, path) < this.getValue(b, path)) return -1
+                return 0
+            })))
     }
 
     getValue<ObjectType>(object: ObjectType, path: string) {

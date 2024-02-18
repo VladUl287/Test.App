@@ -49,7 +49,7 @@
                 <td>-</td>
                 <td>-</td>
             </tr>
-            <tr *ngFor="let employee of employees">
+            <tr *ngFor="let employee of employees | async">
                 <th class="align-middle" scope="row">{{ employee.department.name }}</th>
                 <td class="align-middle">{{ employee.fullName }}</td>
                 <td class="align-middle">{{ employee.dateBirth }}</td>
